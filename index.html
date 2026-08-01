@@ -187,7 +187,7 @@
   .footer{padding:56px 8vw;text-align:center;color:var(--muted-2);font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:1.5px;}
 
   /* ===== INTRO OVERLAY ===== */
-  .intro-overlay{position:fixed;inset:0;background:#050505;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s ease, visibility .6s ease;}
+  .intro-overlay{position:fixed;inset:0;background:#050505;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s ease, visibility .6s ease;animation:introAutoHide 0.01s ease forwards 3.8s;}
   .intro-overlay.hide{opacity:0;visibility:hidden;pointer-events:none;}
   .intro-logo{font-family:var(--font-display);font-size:clamp(30px,7vw,64px);color:var(--paper);letter-spacing:1px;opacity:0;animation:logoIn .9s ease forwards .15s;text-align:center;line-height:1.15;}
   .intro-logo span{color:var(--amber);}
@@ -196,6 +196,7 @@
   .intro-bar{width:220px;height:2px;background:var(--line);margin-top:22px;overflow:hidden;border-radius:2px;opacity:0;animation:logoIn .6s ease forwards .5s;}
   .intro-bar-fill{width:0%;height:100%;background:var(--amber);animation:fillBar 1.6s ease forwards .6s;}
   @keyframes fillBar{to{width:100%;}}
+  @keyframes introAutoHide{to{opacity:0;visibility:hidden;pointer-events:none;}}
 
   .hero-eyebrow,.hero h1,.hero-sub,.hero-pipeline,.dashboard-grid{opacity:0;transform:translateY(18px);animation:heroIn .7s ease forwards;}
   .hero-eyebrow{animation-delay:1.9s;}
@@ -857,6 +858,4 @@
         <h4>🎯 Diagnóstico</h4>
         <ul class="checklist">
           <li>Minha faixa etária está ampla demais (ex.: 18-65) sem necessidade?</li>
-          <li>Estou usando interesses genéricos em vez de específicos?</li>
-          <li>Já testei restringir e comparar o resultado?</li>
-          <li>Sei qual o tamanho ideal de p
+          <li>Estou usando interesses genéricos em ve
