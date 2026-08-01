@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚨 Os 20 Erros do Marketing Digital — Manual PTA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-950:#070707;
+    --navy-900:#0D0D0D;
+    --navy-800:#141414;
+    --navy-700:#1c1c1c;
+    --line:#2A2A2A;
+    --line-soft:rgba(255,199,0,0.10);
+    --cyan:#FFC700;
+    --cyan-dim:#B38A00;
+    --amber:#FF3B3B;
+    --paper:#F5F5F5;
+    --muted:#9A9A9A;
+    --muted-2:#6B6B6B;
+    --font-display:'Anton',sans-serif;
+    --font-body:'Inter',sans-serif;
+    --font-mono:'IBM Plex Mono',monospace;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important;}
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--navy-950);
+    color:var(--paper);
+    font-family:var(--font-body);
+    line-height:1.6;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:48px 48px;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--cyan);color:var(--navy-950);}
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:2px;}
+
+  /* ===== LAYOUT ===== */
+  .app{display:grid;grid-template-columns:290px 1fr;min-height:100vh;}
+  @media (max-width:900px){.app{grid-template-columns:1fr;}}
+
+  /* ===== SIDEBAR ===== */
+  .sidebar{
+    position:sticky;top:0;height:100vh;overflow-y:auto;
+    background:var(--navy-900);border-right:1px solid var(--line);
+    padding:28px 20px 60px;
+  }
+  @media (max-width:900px){
+    .sidebar{position:fixed;left:0;top:0;bottom:0;width:84vw;max-width:330px;z-index:60;
+      transform:translateX(-100%);transition:transform .25s ease;box-shadow:20px 0 60px rgba(0,0,0,0.6);}
+    .sidebar.open{transform:translateX(0);}
+  }
+  .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:55;}
+  .sidebar-overlay.show{display:block;}
+
+  .brand{display:flex;align-items:baseline;gap:8px;margin-bottom:2px;}
+  .brand-mark{font-family:var(--font-display);font-weight:700;font-size:20px;letter-spacing:1px;color:var(--amber);}
+  .brand-sub{font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:1px;}
+  .brand-tag{font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-bottom:22px;display:block;font-weight:600;letter-spacing:.5px;}
+
+  .pillar-block{margin-bottom:6px;}
+  .pillar-label{
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:1.5px;color:var(--muted);
+    padding:14px 8px 6px;text-transform:uppercase;display:flex;align-items:center;gap:8px;font-weight:600;
+  }
+  .pillar-label .dot{width:6px;height:6px;border-radius:50%;background:var(--line);}
+  .pillar-label.active-pillar .dot{background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
+
+  .trace{position:relative;padding-left:20px;}
+  .trace::before{content:'';position:absolute;left:7px;top:2px;bottom:2px;width:1px;background:var(--line);}
+  .node{position:relative;display:block;padding:8px 10px 8px 4px;border-radius:4px;font-size:12.5px;color:var(--muted);transition:all .15s ease;cursor:pointer;font-weight:500;}
+  .node::before{content:'';position:absolute;left:-16.5px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:var(--navy-900);border:1.5px solid var(--line);}
+  .node .n-code{font-family:var(--font-mono);font-size:10px;color:var(--muted-2);display:block;margin-bottom:1px;font-weight:600;letter-spacing:.5px;}
+  .node:hover{color:var(--paper);background:var(--navy-800);}
+  .node.active{color:var(--cyan);background:var(--navy-800);}
+  .node.active::before{background:var(--cyan);border-color:var(--cyan);box-shadow:0 0 6px var(--cyan);}
+
+  .side-cta{margin-top:24px;padding:16px;border:1px dashed var(--line);border-radius:8px;}
+  .side-cta p{font-size:11.5px;color:var(--muted);font-weight:500;line-height:1.6;}
+  .side-cta strong{color:var(--cyan);}
+
+  /* ===== MOBILE BAR ===== */
+  .mobile-bar{display:none;position:sticky;top:0;z-index:50;background:var(--navy-900);border-bottom:1px solid var(--line);padding:14px 18px;align-items:center;justify-content:space-between;}
+  .mobile-bar .brand-mark{font-size:18px;}
+  .menu-btn{background:var(--navy-800);border:1px solid var(--line);border-radius:6px;padding:9px 12px;color:var(--paper);font-size:12.5px;display:flex;gap:8px;align-items:center;font-weight:600;font-family:var(--font-body);}
+  .menu-btn .bar{display:block;width:14px;height:2px;background:var(--cyan);}
+  @media (max-width:900px){.mobile-bar{display:flex;}}
+
+  /* ===== MAIN ===== */
+  main{overflow-x:hidden;}
+  .hero{min-height:88vh;display:flex;flex-direction:column;justify-content:center;padding:60px 8vw;border-bottom:1px solid var(--line);}
+  .hero-eyebrow{font-family:var(--font-mono);font-size:12px;color:var(--amber);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:10px;font-weight:600;}
+  .hero-eyebrow::before{content:'';width:26px;height:1px;background:var(--amber);}
+  .hero h1{font-family:var(--font-display);font-size:clamp(36px,7vw,80px);font-weight:700;line-height:0.98;letter-spacing:-1px;max-width:960px;}
+  .hero h1 .accent{color:var(--cyan);}
+  .hero h1 .accent-alert{color:var(--amber);}
+  .hero-sub{font-size:clamp(15px,2vw,18px);color:var(--muted);max-width:600px;margin-top:24px;font-weight:500;}
+  .hero-pipeline{display:flex;gap:0;margin-top:44px;border:1px solid var(--line);border-radius:8px;overflow:hidden;max-width:760px;}
+  .hero-pipeline .p-cell{flex:1;padding:16px 18px;border-right:1px solid var(--line);}
+  .hero-pipeline .p-cell:last-child{border-right:none;}
+  .hero-pipeline .p-letter{font-family:var(--font-display);font-size:24px;color:var(--cyan);font-weight:700;}
+  .hero-pipeline .p-word{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:4px;font-weight:600;}
+
+  .section{padding:76px 8vw;border-bottom:1px solid var(--line);max-width:1180px;}
+  .mod-header{margin-bottom:44px;}
+  .mod-eyebrow{font-family:var(--font-mono);font-size:12px;color:var(--cyan);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;font-weight:600;}
+  .mod-header h2{font-family:var(--font-display);font-size:clamp(28px,4.5vw,48px);font-weight:700;letter-spacing:-0.5px;}
+  .mod-header .mod-desc{color:#c3d0d9;margin-top:14px;max-width:660px;font-size:16px;font-weight:500;}
+
+  .page-block{border-top:1px solid var(--line-soft);padding-top:40px;margin-top:40px;}
+  .page-tag{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;font-weight:600;}
+  .page-block h3{font-family:var(--font-display);font-size:clamp(22px,3vw,32px);font-weight:600;margin-bottom:16px;letter-spacing:-0.3px;}
+  .page-block h4{font-family:var(--font-display);font-size:18.5px;font-weight:700;margin:28px 0 10px;color:#FFFFFF;letter-spacing:-0.2px;}
+  .page-block p{color:#d6e0e8;margin-bottom:14px;max-width:760px;font-weight:400;}
+  .page-block p.lede{font-size:16.5px;color:#FFFFFF;font-weight:600;}
+  .note-small{font-family:var(--font-mono);font-size:12.5px;color:var(--muted);font-style:italic;margin:6px 0 16px;max-width:700px;font-weight:500;}
+
+  .badge-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .badge-num{background:var(--cyan);color:#0A0A0A;font-family:var(--font-display);font-size:15px;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 18px rgba(255,199,0,0.35);}
+  .badge-num.alert{background:var(--amber);box-shadow:0 0 18px rgba(255,59,59,0.4);color:#0A0A0A;}
+  .badge-label{font-family:var(--font-mono);font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700;}
+
+  .conseq-box{background:var(--navy-800);border:1px solid var(--amber);border-radius:6px;padding:16px 18px;margin:6px 0 22px;max-width:760px;}
+  .conseq-box .cb-label{font-family:var(--font-mono);font-size:10.5px;color:var(--amber);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;}
+  .conseq-box p{margin:0;color:#f0d9d9;font-size:14.5px;font-weight:500;}
+
+  .example-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0 22px;}
+  @media(max-width:700px){.example-row{grid-template-columns:1fr;}}
+  .example-card{background:var(--navy-800);border:1px solid var(--line);border-radius:6px;padding:16px 18px;}
+  .example-card .ex-label{font-family:var(--font-mono);font-size:10.5px;color:var(--cyan);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;}
+  .example-card p{margin:0;font-size:14.5px;color:#d6e0e8;font-weight:500;}
+
+  .checklist{list-style:none;margin:14px 0 22px;border:1px solid var(--line);border-radius:8px;overflow:hidden;max-width:660px;}
+  .checklist li{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line-soft);font-size:14.5px;color:#dbe6ed;cursor:pointer;transition:background .15s ease,color .15s ease;user-select:none;font-weight:500;}
+  .checklist li:hover{background:rgba(255,199,0,0.05);}
+  .checklist li:last-child{border-bottom:none;}
+  .checklist li::before{content:'';flex-shrink:0;width:18px;height:18px;margin-top:1px;border:1.5px solid var(--cyan-dim);border-radius:4px;background:transparent;color:var(--cyan);font-size:11px;display:flex;align-items:center;justify-content:center;line-height:1;transition:all .15s ease;}
+  .checklist li.checked{color:var(--paper);font-weight:600;}
+  .checklist li.checked::before{content:'✔';border-color:var(--cyan);background:var(--cyan);color:#0A0A0A;box-shadow:0 0 10px rgba(255,199,0,0.4);}
+
+  .step-list{counter-reset:step;margin:14px 0 22px;max-width:720px;}
+  .step-list .step-item{counter-increment:step;position:relative;padding:12px 0 12px 44px;border-bottom:1px solid var(--line-soft);}
+  .step-list .step-item:last-child{border-bottom:none;}
+  .step-list .step-item::before{content:counter(step,decimal-leading-zero);position:absolute;left:0;top:10px;font-family:var(--font-mono);font-size:12px;color:var(--cyan);border:1px solid var(--cyan-dim);border-radius:4px;width:28px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:600;}
+  .step-item strong{color:#FFFFFF;font-weight:800;font-size:15px;letter-spacing:-.1px;}
+  .step-item p{margin:0;color:#d6e0e8;font-size:14.5px;font-weight:500;}
+
+  .plan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 22px;}
+  @media(max-width:900px){.plan-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.plan-grid{grid-template-columns:1fr;}}
+  .plan-cell{background:var(--navy-800);border:1px solid var(--line);border-radius:6px;padding:14px 16px;}
+  .plan-cell .pc-label{font-family:var(--font-mono);font-size:10px;color:var(--cyan);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;font-weight:700;}
+  .plan-cell p{margin:0;font-size:13.5px;color:#c7d4de;font-weight:500;}
+
+  .pta-link{background:var(--navy-800);border:1px solid var(--cyan-dim);border-radius:8px;padding:18px 20px;margin:22px 0 6px;max-width:760px;}
+  .pta-link .pl-label{font-family:var(--font-mono);font-size:10.5px;color:var(--cyan);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:700;}
+  .pta-link p{margin:0;color:#dbe6ed;font-size:14.5px;font-weight:500;}
+
+  .stat-strip{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:18px 0;max-width:760px;}
+  .stat-strip .stat{flex:1;min-width:130px;padding:16px 18px;border-right:1px solid var(--line);}
+  .stat-strip .stat:last-child{border-right:none;}
+  .stat-strip .num{font-family:var(--font-display);font-size:22px;color:var(--paper);font-weight:700;}
+  .stat-strip .lbl{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);margin-top:3px;font-weight:600;}
+
+  .icon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0;}
+  @media(max-width:800px){.icon-grid{grid-template-columns:repeat(2,1fr);}}
+  .icon-card{background:var(--navy-800);border:1px solid var(--line);border-radius:8px;padding:16px 16px;}
+  .icon-card .ic-emoji{font-size:20px;margin-bottom:8px;display:block;}
+  .icon-card .ic-title{font-family:var(--font-display);font-size:13.5px;color:var(--paper);margin-bottom:4px;letter-spacing:.2px;}
+  .icon-card p{margin:0;font-size:12.5px;color:var(--muted);font-weight:500;}
+
+  .result-panel{border:1px solid var(--cyan-dim);border-radius:8px;padding:24px 26px;margin-top:36px;background:linear-gradient(135deg, rgba(255,199,0,0.06), transparent);max-width:820px;}
+  .result-panel .rp-tag{font-family:var(--font-mono);font-size:11px;color:var(--amber);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;font-weight:700;}
+  .result-panel ul{list-style:none;}
+  .result-panel li{padding:5px 0;font-size:14.5px;color:#dbe6ed;display:flex;gap:8px;font-weight:600;}
+  .result-panel li::before{content:'✔';color:var(--cyan);}
+
+  .footer{padding:56px 8vw;text-align:center;color:var(--muted-2);font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:1.5px;}
+
+  /* ===== INTRO OVERLAY ===== */
+  .intro-overlay{position:fixed;inset:0;background:#050505;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s ease, visibility .6s ease;}
+  .intro-overlay.hide{opacity:0;visibility:hidden;pointer-events:none;}
+  .intro-logo{font-family:var(--font-display);font-size:clamp(30px,7vw,64px);color:var(--paper);letter-spacing:1px;opacity:0;animation:logoIn .9s ease forwards .15s;text-align:center;line-height:1.15;}
+  .intro-logo span{color:var(--amber);}
+  @keyframes logoIn{to{opacity:1;}}
+  .intro-status{font-family:var(--font-mono);font-size:12px;color:var(--muted);letter-spacing:1.5px;margin-top:18px;opacity:0;animation:logoIn .9s ease forwards .5s;font-weight:600;}
+  .intro-bar{width:220px;height:2px;background:var(--line);margin-top:22px;overflow:hidden;border-radius:2px;opacity:0;animation:logoIn .6s ease forwards .5s;}
+  .intro-bar-fill{width:0%;height:100%;background:var(--amber);animation:fillBar 1.6s ease forwards .6s;}
+  @keyframes fillBar{to{width:100%;}}
+
+  .hero-eyebrow,.hero h1,.hero-sub,.hero-pipeline,.dashboard-grid{opacity:0;transform:translateY(18px);animation:heroIn .7s ease forwards;}
+  .hero-eyebrow{animation-delay:1.9s;}
+  .hero h1{animation-delay:2.05s;}
+  .hero-sub{animation-delay:2.25s;}
+  .hero-pipeline{animation-delay:2.4s;}
+  .dashboard-grid{animation-delay:2.55s;}
+  @keyframes heroIn{to{opacity:1;transform:translateY(0);}}
+
+  .dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:32px;max-width:940px;}
+  @media (max-width:760px){.dashboard-grid{grid-template-columns:1fr;}}
+  .dash-card{background:var(--navy-800);border:1px solid var(--line);border-radius:12px;padding:22px 22px 18px;box-shadow:0 24px 60px rgba(0,0,0,0.35);}
+  .dash-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .dash-title{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;}
+  .dash-dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
+  .pta-progress{display:flex;flex-direction:column;gap:12px;margin-bottom:14px;}
+  .pp-row{display:flex;align-items:center;gap:10px;}
+  .pp-letter{font-family:var(--font-display);font-size:14px;color:var(--paper);width:18px;}
+  .pp-track{flex:1;height:7px;background:var(--navy-700);border-radius:4px;overflow:hidden;}
+  .pp-fill{height:100%;background:var(--cyan);border-radius:4px;}
+  .pp-pct{font-family:var(--font-mono);font-size:11px;color:var(--muted);width:44px;text-align:right;font-weight:600;}
+  .dash-stat-line{display:flex;justify-content:space-between;align-items:baseline;padding-top:14px;border-top:1px solid var(--line-soft);}
+  .dash-stat-line .lbl{font-family:var(--font-mono);font-size:11px;color:var(--muted);font-weight:600;}
+  .dash-stat-line .val{font-family:var(--font-display);font-size:18px;color:var(--paper);}
+  .growth-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+  .g-stat .g-num{font-family:var(--font-display);font-size:22px;color:var(--paper);}
+  .g-stat .g-delta{font-family:var(--font-mono);font-size:11px;color:var(--amber);font-weight:700;}
+  .g-stat .g-lbl{font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:1px;font-weight:600;}
+  .mini-bars{display:flex;align-items:flex-end;gap:6px;height:52px;}
+  .mini-bars .bar{flex:1;background:linear-gradient(var(--amber), var(--cyan-dim));border-radius:2px 2px 0 0;opacity:.9;}
+
+  /* ===== PAGE NAV (paginação anterior/próximo) ===== */
+  .page-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8vw 56px;max-width:1180px;}
+  .page-nav .pn-btn{font-family:var(--font-mono);font-size:12.5px;color:var(--paper);background:var(--navy-800);border:1px solid var(--line);border-radius:6px;padding:11px 18px;cursor:pointer;letter-spacing:.5px;font-weight:600;transition:border-color .15s ease,color .15s ease;}
+  .page-nav .pn-btn:hover:not(:disabled){border-color:var(--cyan-dim);color:var(--cyan);}
+  .page-nav .pn-btn:disabled{opacity:.3;cursor:default;}
+  .page-nav .pn-count{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:1.5px;font-weight:600;}
+</style>
+</head>
+<body>
+
+<!-- ===================== INTRO OVERLAY ===================== -->
+<div class="intro-overlay" id="introOverlay">
+  <div class="intro-logo">🚨 OS 20 <span>ERROS</span><br>DO MARKETING DIGITAL</div>
+  <div class="intro-status" id="introStatus">CARREGANDO MANUAL DE DIAGNÓSTICO...</div>
+  <div class="intro-bar"><div class="intro-bar-fill"></div></div>
+</div>
+
+<!-- ===================== MOBILE TOP BAR ===================== -->
+<div class="mobile-bar">
+  <span class="brand-mark">🚨 20 ERROS</span>
+  <button class="menu-btn" id="menuBtn"><span class="bar"></span><span class="bar"></span><span class="bar"></span> Índice</button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="app">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><span class="brand-mark">🚨 20 ERROS</span></div>
+    <span class="brand-tag">Manual de Diagnóstico · Complemento do Método PTA</span>
+
+    <div class="pillar-block">
+      <div class="pillar-label"><span class="dot"></span> Início</div>
+      <div class="trace">
+        <a href="#top" class="node" data-target="top"><span class="n-code">HOME</span>Introdução</a>
+        <a href="#comousar" class="node" data-target="comousar"><span class="n-code">GUIA</span>Como Usar o Manual</a>
+      </div>
+    </div>
+
+    <div class="pillar-block">
+      <div class="pillar-label"><span class="dot"></span> Pilar P — Produto</div>
+      <div class="trace">
+        <a href="#erro1" class="node" data-target="erro1"><span class="n-code">ERRO 01 · MOD.01</span>Lançar sem validar a dor</a>
+        <a href="#erro2" class="node" data-target="erro2"><span class="n-code">ERRO 02 · MOD.01</span>Nicho no achismo</a>
+        <a href="#erro3" class="node" data-target="erro3"><span class="n-code">ERRO 03 · MOD.01</span>Oferta genérica</a>
+        <a href="#erro4" class="node" data-target="erro4"><span class="n-code">ERRO 04 · MOD.02</span>Preço e promessa no chute</a>
+        <a href="#erro5" class="node" data-target="erro5"><span class="n-code">ERRO 05 · MOD.02</span>Estrutura confusa e inchada</a>
+        <a href="#erro6" class="node" data-target="erro6"><span class="n-code">ERRO 06 · MOD.02</span>Sem nome forte nem prova</a>
+      </div>
+    </div>
+
+    <div class="pillar-block">
+      <div class="pillar-label"><span class="dot"></span> Pilar T — Tráfego</div>
+      <div class="trace">
+        <a href="#erro7" class="node" data-target="erro7"><span class="n-code">ERRO 07 · MOD.03</span>Anunciar sem fundamentos</a>
+        <a href="#erro8" class="node" data-target="erro8"><span class="n-code">ERRO 08 · MOD.04</span>Público no achismo</a>
+        <a href="#erro9" class="node" data-target="erro9"><span class="n-code">ERRO 09 · MOD.04</span>Público amplo demais</a>
+        <a href="#erro10" class="node" data-target="erro10"><span class="n-code">ERRO 10 · MOD.05</span>Criativo vende característica</a>
+        <a href="#erro11" class="node" data-target="erro11"><span class="n-code">ERRO 11 · MOD.05</span>Um criativo só</a>
+        <a href="#erro12" class="node" data-target="erro12"><span class="n-code">ERRO 12 · MOD.05</span>Matar campanha cedo</a>
+        <a href="#erro13" class="node" data-target="erro13"><span class="n-code">ERRO 13 · MOD.03</span>Uma única fonte de tráfego</a>
+      </div>
+    </div>
+
+    <div class="pillar-block">
+      <div class="pillar-label"><span class="dot"></span> Pilar A — Aquisição</div>
+      <div class="trace">
+        <a href="#erro14" class="node" data-target="erro14"><span class="n-code">ERRO 14 · MOD.06</span>Página sem gatilho mental</a>
+        <a href="#erro15" class="node" data-target="erro15"><span class="n-code">ERRO 15 · MOD.06</span>Funil sem follow-up</a>
+        <a href="#erro16" class="node" data-target="erro16"><span class="n-code">ERRO 16 · MOD.06</span>Sem order bump/upsell</a>
+        <a href="#erro17" class="node" data-target="erro17"><span class="n-code">ERRO 17 · MOD.06</span>Objeções não mapeadas</a>
+        <a href="#erro18" class="node" data-target="erro18"><span class="n-code">ERRO 18 · MOD.07</span>Métricas erradas</a>
+        <a href="#erro19" class="node" data-target="erro19"><span class="n-code">ERRO 19 · MOD.07</span>Escalar sem critério</a>
+        <a href="#erro20" class="node" data-target="erro20"><span class="n-code">ERRO 20 · MOD.08</span>Sem plano de ajuste contínuo</a>
+      </div>
+    </div>
+
+    <div class="side-cta"><p>Cada erro possui <strong>diagnóstico, metodologia, exemplo, checklist e plano de execução</strong> prontos para aplicar hoje.</p></div>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <span class="hero-eyebrow">Manual de Diagnóstico e Correção · Complemento do Método PTA</span>
+      <h1>OS 20 <span class="accent-alert">ERROS</span><br>DO MARKETING <span class="accent">DIGITAL</span></h1>
+      <p class="hero-sub">Os 20 erros que você não pode cometer antes, durante e depois de aplicar o Método PTA. Cada um com diagnóstico, metodologia de correção, exemplo prático, checklist e plano de execução — prontos pra você aplicar hoje, não só ler.</p>
+
+      <div class="hero-pipeline">
+        <div class="p-cell"><div class="p-letter">6</div><div class="p-word">Erros de Produto</div></div>
+        <div class="p-cell"><div class="p-letter">7</div><div class="p-word">Erros de Tráfego</div></div>
+        <div class="p-cell"><div class="p-letter">7</div><div class="p-word">Erros de Aquisição</div></div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dash-card">
+          <div class="dash-head"><span class="dash-title">Cobertura do Manual</span><span class="dash-dot"></span></div>
+          <div class="pta-progress">
+            <div class="pp-row"><span class="pp-letter">P</span><div class="pp-track"><div class="pp-fill" style="width:100%;"></div></div><span class="pp-pct">6/6</span></div>
+            <div class="pp-row"><span class="pp-letter">T</span><div class="pp-track"><div class="pp-fill" style="width:100%;"></div></div><span class="pp-pct">7/7</span></div>
+            <div class="pp-row"><span class="pp-letter">A</span><div class="pp-track"><div class="pp-fill" style="width:100%;"></div></div><span class="pp-pct">7/7</span></div>
+          </div>
+          <div class="dash-stat-line"><span class="lbl">Erros mapeados</span><span class="val">20 / 20</span></div>
+        </div>
+
+        <div class="dash-card">
+          <div class="dash-head"><span class="dash-title">O que tem em cada erro</span><span class="dash-dot"></span></div>
+          <div class="growth-stats">
+            <div class="g-stat"><div class="g-num">8</div><div class="g-delta">seções</div><div class="g-lbl">por erro</div></div>
+            <div class="g-stat"><div class="g-num">100%</div><div class="g-delta">aplicável</div><div class="g-lbl">hoje mesmo</div></div>
+          </div>
+          <div class="mini-bars">
+            <div class="bar" style="height:60%;"></div><div class="bar" style="height:75%;"></div><div class="bar" style="height:50%;"></div>
+            <div class="bar" style="height:90%;"></div><div class="bar" style="height:65%;"></div><div class="bar" style="height:100%;"></div><div class="bar" style="height:80%;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INTRODUÇÃO / PÁGINA 1 ============ -->
+    <section class="section" id="intro-conteudo">
+      <div class="mod-header">
+        <div class="mod-eyebrow">Página 01 · Introdução</div>
+        <h2>Por que este manual existe</h2>
+        <p class="mod-desc">Este não é mais um bônus de enfeite. É um material de diagnóstico e correção, feito pra ser consultado sempre que alguma etapa do seu negócio travar.</p>
+      </div>
+
+      <div class="page-block" style="margin-top:0;border-top:none;padding-top:0;">
+        <p class="lede">O Método PTA te ensina a construir Produto, Tráfego e Aquisição do zero. Este manual faz o trabalho complementar: te mostra exatamente onde as pessoas mais travam em cada uma dessas três etapas — antes, durante e depois de aplicar o método — e como corrigir cada travamento na prática.</p>
+
+        <p>Não existe negócio digital que nunca erra. Existe negócio digital que <strong style="color:#fff;">identifica o erro rápido</strong> e corrige antes que ele custe caro. É exatamente essa a função deste material: ser seu ponto de checagem, o lugar que você volta sempre que algo não estiver saindo como esperado.</p>
+
+        <h4>Como este manual complementa o PTA</h4>
+        <p>Enquanto o PTA te ensina a <em>construir</em> cada peça (produto, tráfego, aquisição), este manual te ensina a <em>diagnosticar</em> quando alguma dessas peças está com problema — e te entrega a correção passo a passo, sem enrolação. Os 20 erros seguem a mesma ordem dos 3 pilares do método, então você sempre sabe exatamente em qual módulo do PTA aquele problema se resolve.</p>
+
+        <h4>O que você vai aprender</h4>
+        <div class="icon-grid">
+          <div class="icon-card"><span class="ic-emoji">🚨</span><div class="ic-title">Identificar</div><p>Reconhecer, com precisão, se você está cometendo cada um dos 20 erros.</p></div>
+          <div class="icon-card"><span class="ic-emoji">⚒️</span><div class="ic-title">Corrigir</div><p>Aplicar uma metodologia completa de correção, passo a passo, para cada erro.</p></div>
+          <div class="icon-card"><span class="ic-emoji">📋</span><div class="ic-title">Validar</div><p>Confirmar, com checklist, que o erro foi realmente resolvido — não só "meio resolvido".</p></div>
+          <div class="icon-card"><span class="ic-emoji">🚀</span><div class="ic-title">Executar</div><p>Sair de cada página sabendo exatamente o que fazer hoje e o que fazer amanhã.</p></div>
+        </div>
+
+        <h4>Como aplicar cada metodologia</h4>
+        <p>Recomendo dois jeitos de usar este manual: o primeiro, lendo os 20 erros na ordem, para ter o panorama completo antes de lançar qualquer coisa. O segundo — o mais comum no dia a dia — é consultar pontualmente: sempre que uma campanha não performar, uma página não converter ou um produto não vender, volte à seção correspondente do pilar certo (Produto, Tráfego ou Aquisição) e rode o diagnóstico daquele erro específico.</p>
+      </div>
+    </section>
+
+    <!-- ============ COMO USAR / PÁGINA 2 ============ -->
+    <section class="section" id="comousar">
+      <div class="mod-header">
+        <div class="mod-eyebrow">Página 02 · Como Usar o Manual</div>
+        <h2>A estrutura que se repete em todos os 20 erros</h2>
+        <p class="mod-desc">Todo erro deste manual segue exatamente a mesma estrutura de 8 blocos. Uma vez que você entende essa estrutura, consegue navegar pelo manual inteiro sem se perder.</p>
+      </div>
+
+      <div class="page-block" style="margin-top:0;border-top:none;padding-top:0;">
+        <div class="icon-grid" style="grid-template-columns:repeat(4,1fr);">
+          <div class="icon-card"><span class="ic-emoji">🚨</span><div class="ic-title">O Erro</div><p>O que é, por que acontece, quem costuma cometer e qual o prejuízo real.</p></div>
+          <div class="icon-card"><span class="ic-emoji">❌</span><div class="ic-title">Consequência</div><p>O que acontece na prática, em números e situações reais, se o erro não for corrigido.</p></div>
+          <div class="icon-card"><span class="ic-emoji">🎯</span><div class="ic-title">Diagnóstico</div><p>Perguntas objetivas para você descobrir sozinho se está cometendo esse erro agora.</p></div>
+          <div class="icon-card"><span class="ic-emoji">⚒️</span><div class="ic-title">Metodologia de Correção</div><p>Passo a passo completo — estratégia, ferramentas e processo — para resolver o erro.</p></div>
+          <div class="icon-card"><span class="ic-emoji">📸</span><div class="ic-title">Exemplo Prático</div><p>Uma situação real de antes e depois, mostrando a correção aplicada.</p></div>
+          <div class="icon-card"><span class="ic-emoji">📋</span><div class="ic-title">Checklist</div><p>Uma lista clicável para você confirmar, item por item, que o erro foi corrigido de verdade.</p></div>
+          <div class="icon-card"><span class="ic-emoji">🚀</span><div class="ic-title">Plano de Execução</div><p>O que fazer hoje, o que fazer amanhã, o que revisar e o que melhorar depois.</p></div>
+          <div class="icon-card"><span class="ic-emoji">🔗</span><div class="ic-title">Ligação com o PTA</div><p>Qual módulo exato do Método PTA (MOD.01 a MOD.08) resolve ou complementa aquele erro.</p></div>
+        </div>
+
+        <h4>Uma recomendação final</h4>
+        <p>Não leia este manual como quem lê um artigo. Leia como quem revisa uma lista de verificação antes de decolar um avião — item por item, marcando o checklist, anotando o plano de execução. O aluno que termina cada erro sabendo exatamente o próximo passo é o aluno que corrige de verdade, não o que só "ficou sabendo".</p>
+
+        <div class="result-panel">
+          <div class="rp-tag">Antes de seguir</div>
+          <ul>
+            <li>Entendi os 8 blocos que se repetem em cada erro</li>
+            <li>Sei que os erros seguem a ordem dos 3 pilares do PTA</li>
+            <li>Sei que posso ler tudo na ordem ou consultar pontualmente</li>
+            <li>Estou pronto para começar pelo Pilar P — Produto</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PILAR P — PRODUTO (ERROS 01-06)
+    ================================================================== -->
+    <section class="section" id="pilarP">
+      <div class="mod-header">
+        <div class="mod-eyebrow">Pilar P — Produto · Erros 01 a 06</div>
+        <h2>Erros que travam a construção do Produto</h2>
+        <p class="mod-desc">Antes de existir tráfego ou aquisição, precisa existir um produto que resolve uma dor real. Estes são os 6 erros que mais derrubam essa base — ligados diretamente aos módulos 01 e 02 do PTA.</p>
+      </div>
+
+      <!-- ERRO 01 -->
+      <div class="page-block" id="erro1">
+        <div class="page-tag">Erro Nº 01 · Pilar Produto · Liga com MOD.01</div>
+        <div class="badge-row"><div class="badge-num alert">01</div><div class="badge-label">🚨 O Erro</div></div>
+        <h3>Lançar sem validar a dor</h3>
+        <p class="lede">É criar (e lançar) um produto antes de confirmar, com dado real, que existe gente com essa dor específica e disposta a pagar por uma solução.</p>
+        <p>Acontece por ansiedade de lançar rápido e pelo medo de "perder o timing" — a pessoa acha que a ideia é óbvia demais para precisar de validação. É o erro mais comum entre quem já teve alguma venda em outro contexto e assume que a fórmula se repete sozinha. O prejuízo é direto: meses de produção jogados fora e uma frustração que costuma tirar as pessoas do digital de vez.</p>
+
+        <div class="conseq-box"><div class="cb-label">❌ Consequência</div><p>Você lança, anuncia, gasta em tráfego — e a taxa de conversão fica próxima de zero, porque o produto resolve um problema que quase ninguém tem de verdade.</p></div>
+
+        <h4>🎯 Diagnóstico</h4>
+        <p class="note-small">Responda com sinceridade — sem se convencer da resposta que você quer ouvir:</p>
+        <ul class="checklist">
+          <li>Eu validei essa dor na Biblioteca de Anúncios antes de criar o produto?</li>
+          <li>Eu sei citar, sem pensar, 3 pessoas reais que têm exatamente esse problema?</li>
+          <li>Alguém já me perguntou "como resolvo isso" antes de eu ter o produto pronto?</li>
+          <li>Existe concorrência pagando por tráfego para esse mesmo problema?</li>
+        </ul>
+
+        <h4>⚒️ Metodologia de Correção</h4>
+        <div class="step-list">
+          <div class="step-item"><strong>Pause a produção</strong><p>Antes de gravar mais uma aula, volte ao MOD.01 — Descoberta da Oportunidade.</p></div>
+          <div class="step-item"><strong>Valide na Biblioteca de Anúncios</strong><p>Rode a busca com 3 variações da palavra-chave do seu nicho e observe volume, tempo de veiculação e diversidade de anunciantes.</p></div>
+          <div class="step-item"><strong>Rode o mapeamento de dores no ChatGPT</strong><p>Use o mesmo prompt do MOD.01 e compare a resposta com a dor que você escolheu.</p></div>
+          <div class="step-item"><strong>Valide com pessoas reais</strong><p>Poste uma pergunta direta em grupos/comunidades do nicho e observe as respostas.</p></div>
+          <div class="step-item"><strong>Só então retome a produção</strong><p>Ajuste o produto com base no que a validação mostrou — mesmo que isso signifique mudar a dor original.</p></div>
+        </div>
+        <p class="note-small">Ferramentas: Biblioteca de Anúncios do Meta, ChatGPT, grupos/comunidades do nicho.</p>
+
+        <h4>📸 Exemplo Prático</h4>
+        <div class="example-row">
+          <div class="example-card"><div class="ex-label">Antes</div><p>"Vou lançar um curso completo de produtividade porque eu gosto do assunto."</p></div>
+          <div class="example-card"><div class="ex-label">Depois</div><p>Validação mostrou que a dor mais urgente é "não consigo manter uma rotina de estudos por mais de 3 dias" — e é sobre isso que o produto passa a ser.</p></div>
+        </div>
+
+        <h4>📋 Checklist de Validação</h4>
+        <ul class="checklist">
+          <li>Rodei a validação na Biblioteca de Anúncios</li>
+          <li>Rodei o prompt de mapeamento de dores</li>
+          <li>Conversei com pelo menos 5 pessoas reais do nicho</li>
+          <li>Tenho evidência de demanda guardada</li>
+          <li>A dor está escrita em uma frase clara e específica</li>
+        </ul>
+
+        <h4>🚀 Plano de Execução</h4>
+        <div class="plan-grid">
+          <div class="plan-cell"><div class="pc-label">Hoje</div><p>Rodar a busca na Biblioteca de Anúncios com 3 variações do nicho.</p></div>
+          <div class="plan-cell"><div class="pc-label">Amanhã</div><p>Rodar o prompt de mapeamento de dores e comparar com a ideia inicial.</p></div>
+          <div class="plan-cell"><div class="pc-label">Revisar</div><p>Depois de 7 dias, reavaliar se a dor continua validada.</p></div>
+          <div class="plan-cell"><div class="pc-label">Melhorar</div><p>Repetir esse processo antes de cada novo produto, sem exceção.</p></div>
+        </div>
+
+        <div class="pta-link"><div class="pl-label">🔗 Ligação com o Método PTA</div><p>Resolvido no MOD.01 — Descoberta da Oportunidade, Páginas 3 e 4: validação de nicho na Biblioteca de Anúncios e mapeamento de dores com IA.</p></div>
+      </div>
+
+      <!-- ERRO 02 -->
+      <div class="page-block" id="erro2">
+        <div class="page-tag">Erro Nº 02 · Pilar Produto · Liga com MOD.01</div>
+        <div class="badge-row"><div class="badge-num alert">02</div><div class="badge-label">🚨 O Erro</div></div>
+        <h3>Escolher o nicho no achismo</h3>
+        <p class="lede">É escolher o nicho pelo gosto pessoal ou pela moda do momento, sem checar se existe mercado real pagando por soluções ali dentro.</p>
+        <p>As pessoas escolhem nicho pelo que consomem, não pelo que o mercado compra. É comum em quem está entrando agora e prioriza a paixão pessoal em vez da demanda. O resultado são meses tentando vender para uma audiência pequena ou praticamente inexistente, achando que o problema é a copy quando, na real, é o nicho.</p>
+
+        <div class="conseq-box"><div class="cb-label">❌ Consequência</div><p>Você cria conteúdo, anuncia, e o CPM fica caro e ineficiente porque a plataforma não encontra gente suficiente interessada — o público simplesmente é pequeno demais.</p></div>
+
+        <h4>🎯 Diagnóstico</h4>
+        <ul class="checklist">
+          <li>Escolhi esse nicho porque gosto dele, ou porque vi dado real de demanda?</li>
+          <li>Esse nicho está entre os 4 grandes grupos validados (Dinheiro, Relacionamento, Saúde, Desenvolvimento Pessoal)?</li>
+          <li>Existem outras pessoas/empresas vivendo desse nicho hoje?</li>
+          <li>Eu testei a Biblioteca de Anúncios para esse nicho específico?</li>
+        </ul>
+
+        <h4>⚒️ Metodologia de Correção</h4>
+        <div class="step-list">
+          <div class="step-item"><strong>Reposicione dentro dos 4 grandes grupos</strong><p>Volte à lista do MOD.01, Página 2, e encaixe sua ideia em um deles.</p></div>
+          <div class="step-item"><strong>Valide o subnicho específico</strong><p>Rode a Biblioteca de Anúncios já filtrando pelo subnicho, não só pelo grupo geral.</p></div>
+          <div class="step-item"><strong>Suba um nível se for pequeno demais</strong><p>Ex.: de "treino para triatletas veganos" para "emagrecimento".</p></div>
+          <div class="step-item"><strong>Confirme com 2 fontes diferentes</strong><p>Anúncios ativos + busca no Google/YouTube pelo mesmo termo.</p></div>
+        </div>
+
+        <h4>📸 Exemplo Prático</h4>
+        <div class="example-row">
+          <div class="example-card"><div class="ex-label">Antes</div><p>"Vou fazer um produto sobre crochê amigurumi para colecionadores de bonecos raros."</p></div>
+          <div class="example-card"><div class="ex-label">Depois</div><p>Entrar no nicho de Renda Extra, ensinando artesãs a venderem crochê como fonte de renda — nicho validado, mercado muito maior.</p></div>
+        </div>
+
+        <h4>📋 Checklist de Validação</h4>
+        <ul class="checklist">
+          <li>Meu nicho está dentro de um dos 4 grandes grupos validados</li>
+          <li>Rodei a Biblioteca de Anúncios para esse nicho específico</li>
+          <li>Encontrei pelo menos 3 concorrentes ativos anunciando</li>
+          <li>O nicho tem tamanho suficiente para sustentar um negócio</li>
+        </ul>
+
+        <h4>🚀 Plano de Execução</h4>
+        <div class="plan-grid">
+          <div class="plan-cell"><div class="pc-label">Hoje</div><p>Reposicionar seu nicho dentro de um dos 4 grandes grupos.</p></div>
+          <div class="plan-cell"><div class="pc-label">Amanhã</div><p>Validar o subnicho na Biblioteca de Anúncios.</p></div>
+          <div class="plan-cell"><div class="pc-label">Revisar</div><p>A cada novo produto, repetir a validação de nicho.</p></div>
+          <div class="plan-cell"><div class="pc-label">Melhorar</div><p>Documentar os nichos validados para reaproveitar em produtos futuros.</p></div>
+        </div>
+
+        <div class="pta-link"><div class="pl-label">🔗 Ligação com o Método PTA</div><p>Direto ligado ao MOD.01 — Descoberta da Oportunidade, Páginas 2 e 3: os 4 tipos de nicho e a validação via Biblioteca de Anúncios.</p></div>
+      </div>
+
+      <!-- ERRO 03 -->
+      <div class="page-block" id="erro3">
+        <div class="page-tag">Erro Nº 03 · Pilar Produto · Liga com MOD.01</div>
+        <div class="badge-row"><div class="badge-num alert">03</div><div class="badge-label">🚨 O Erro</div></div>
+        <h3>Oferta genérica demais</h3>
+        <p class="lede">É criar uma oferta ampla ("aprenda tudo sobre X") em vez de resolver um problema pontual e urgente.</p>
+        <p>Acontece por medo de "deixar alguém de fora" — a pessoa acha que quanto mais amplo, mais gente compra. É o contrário. É comum em quem tem muito conhecimento no assunto e quer ensinar tudo que sabe de uma vez só. O prejuízo: a oferta não comunica nada específico, o cliente não sente urgência, e a conversão despenca mesmo com bom tráfego chegando.</p>
+
+        <div class="conseq-box"><div class="cb-label">❌ Consequência</div><p>A pessoa lê a oferta, acha "interessante", mas não sente que aquilo resolve o problema dela agora — e simplesmente não compra.</p></div>
+
+        <h4>🎯 Diagnóstico</h4>
+        <ul class="checklist">
+          <li>Consigo resumir minha oferta em uma frase de dor específica + solução específica?</li>
+          <li>Minha oferta parece "curso completo de..." ou "como resolver X em Y dias"?</li>
+          <li>Um estranho, lendo em 5 segundos, entende exatamente o que vai resolver?</li>
+          <li>Minha oferta cabe em qualquer pessoa do nicho, ou é para alguém específico?</li>
+        </ul>
+
+        <h4>⚒️ Metodologia de Correção</h4>
+        <div class="step-list">
+          <div class="step-item"><strong>Volte à dor escolhida</strong><p>Reescreva a oferta em cima da dor específica do MOD.01, não do tema geral.</p></div>
+          <div class="step-item"><strong>Aplique o teste da frase única</strong><p>"Para [quem], que sofre com [dor], meu produto entrega [resultado específico] em [prazo]."</p></div>
+          <div class="step-item"><strong>Corte o que não serve a essa dor</strong><p>Tudo que não resolve diretamente essa dor sai da oferta.</p></div>
+          <div class="step-item"><strong>Rode o prompt de oferta do MOD.02</strong><p>Focando explicitamente nessa dor pontual, não no tema amplo.</p></div>
+        </div>
+
+        <h4>📸 Exemplo Prático</h4>
+        <div class="example-row">
+          <div class="example-card"><div class="ex-label">Antes</div><p>"Curso completo de marketing digital do zero ao avançado."</p></div>
+          <div class="example-card"><div class="ex-label">Depois</div><p>"Como fazer sua primeira venda no marketing digital em 7 dias, mesmo começando do absoluto zero."</p></div>
+        </div>
+
+        <h4>📋 Checklist de Validação</h4>
+        <ul class="checklist">
+          <li>Minha oferta cabe na frase única de dor + solução + prazo</li>
+          <li>Cortei tudo que não resolve diretamente essa dor</li>
+          <li>Testei a oferta com 3 pessoas fora do meu círculo</li>
+          <li>A oferta soa específica, não genérica</li>
+        </ul>
+
+        <h4>🚀 Plano de Execução</h4>
+        <div class="plan-grid">
+          <div class="plan-cell"><div class="pc-label">Hoje</div><p>Reescrever a oferta usando a frase única.</p></div>
+          <div class="plan-cell"><div class="pc-label">Amanhã</div><p>Testar a nova oferta com pessoas reais do nicho.</p></div>
+          <div class="plan-cell"><div class="pc-label">Revisar</div><p>Comparar interesse/clique antes e depois da mudança.</p></div>
+          <div class="plan-cell"><div class="pc-label">Melhorar</div><p>Guardar a frase única como referência para toda comunicação futura.</p></div>
+        </div>
+
+        <div class="pta-link"><div class="pl-label">🔗 Ligação com o Método PTA</div><p>Trabalhado no MOD.01 (dor específica) e formalizado no MOD.02 — Construção do Produto, Página 4 (prompt de construção de oferta).</p></div>
+      </div>
+
+      <!-- ERRO 04 -->
+      <div class="page-block" id="erro4">
+        <div class="page-tag">Erro Nº 04 · Pilar Produto · Liga com MOD.02</div>
+        <div class="badge-row"><div class="badge-num alert">04</div><div class="badge-label">🚨 O Erro</div></div>
+        <h3>Preço e promessa no chute</h3>
+        <p class="lede">É definir o preço "no olho" e a promessa sem lógica de valor percebido, transformação e comparação de mercado.</p>
+        <p>Acontece por insegurança para precificar — medo de cobrar caro demais, ou ganância de cobrar caro sem entregar valor percebido correspondente. É comum em quem nunca vendeu um produto digital e não sabe onde se ancorar. O prejuízo dos dois lados: preço baixo demais desvaloriza o produto e mata a margem; preço alto sem justificativa gera objeção e abandono no checkout.</p>
+
+        <div class="conseq-box"><div class="cb-label">❌ Consequência</div><p>Ou você vende barato demais e não sobra lucro pra reinvestir em tráfego, ou vende caro sem sustentar com valor percebido e ninguém finaliza a compra.</p></div>
+
+        <h4>🎯 Diagnóstico</h4>
+        <ul class="checklist">
+          <li>Eu defini o preço olhando concorrência real, ou só "por sentimento"?</li>
+          <li>Minha promessa justifica o preço cobrado, com clareza?</li>
+          <li>Eu sei responder "por que custa isso e não menos" em uma frase?</li>
+          <li>Já testei pelo menos 2 faixas de preço diferentes?</li>
+        </ul>
+
+        <h4>⚒️ Metodologia de Correção</h4>
+        <div class="step-list">
+          <div class="step-item"><strong>Pesquise concorrentes reais</strong><p>Mapeie 3 a 5 concorrentes diretos (mesma dor, formato parecido) e a faixa de preço praticada.</p></div>
+          <div class="step-item"><strong>Posicione pelo valor da transformação</strong><p>Não pelo tempo que você levou para criar o produto.</p></div>
+          <div class="step-item"><strong>Escreva a promessa que justifica o preço</strong><p>Resultado + prazo + facilidade, numa frase clara.</p></div>
+          <div class="step-item"><strong>Revise com IA</strong><p>Rode o prompt de oferta do MOD.02 pedindo pra checar se promessa e preço estão coerentes.</p></div>
+        </div>
+
+        <h4>📸 Exemplo Prático</h4>
+        <div class="example-row">
+          <div class="example-card"><div class="ex-label">Antes</div><p>"Vou cobrar R$47 porque parece barato o suficiente pra vender fácil."</p></div>
+          <div class="example-card"><div class="ex-label">Depois</div><p>Pesquisou 4 concorrentes entre R$37 e R$67, posicionou em R$47 com promessa mais específica e um bônus, justificando o valor.</p></div>
+        </div>
+
+        <h4>📋 Checklist de Validação</h4>
+        <ul class="checklist">
+          <li>Pesquisei a faixa de preço de concorrentes reais</li>
+          <li>Minha promessa justifica meu preço</li>
+          <li>Tenho uma resposta pronta pra "por que custa isso"</li>
+          <li>Testei ou planejei testar mais de uma faixa de preço</li>
+        </ul>
+
+        <h4>🚀 Plano de Execução</h4>
+        <div class="plan-grid">
+          <div class="plan-cell"><div class="pc-label">Hoje</div><p>Pesquisar preço de 3-5 concorrentes diretos.</p></div>
+          <div class="plan-cell"><div class="pc-label">Amanhã</div><p>Reescrever a promessa alinhada ao preço definido.</p></div>
+          <div class="plan-cell"><div class="pc-label">Revisar</div><p>Depois das primeiras vendas, avaliar se o preço trava o checkout.</p></div>
+          <div class="plan-cell"><div class="pc-label">Melhorar</div><p>Testar A/B de preço quando o volume de tráfego permitir.</p></div>
+        </div>
+
+        <div class="pta-link"><div class="pl-label">🔗 Ligação com o Método PTA</div><p>Trabalhado no MOD.02 — Construção do Produto, Página 4 (construção da oferta com preço e promessa).</p></div>
+      </div>
+
+      <!-- ERRO 05 -->
+      <div class="page-block" id="erro5">
+        <div class="page-tag">Erro Nº 05 · Pilar Produto · Liga com MOD.02</div>
+        <div class="badge-row"><div class="badge-num alert">05</div><div class="badge-label">🚨 O Erro</div></div>
+        <h3>Estrutura confusa e inchada</h3>
+        <p class="lede">É um produto com módulos fora de ordem e quantidade excessiva de conteúdo, sem sequência lógica de entrega.</p>
+        <p>Acontece pela vontade de "entregar valor" colocando tudo que se sabe, sem organizar pensando na jornada do aluno. É comum em quem domina o assunto tecnicamente, mas nunca estruturou um processo de ensino de verdade. O prejuízo: o aluno se perde, abandona no meio, gera reembolso e comentário negativo.</p>
+
+        <div class="conseq-box"><div class="cb-label">❌ Consequência</div><p>O aluno compra empolgado, começa o módulo 1, se perde no módulo 3 sem saber o que fazer com o que aprendeu — e simplesmente some.</p></div>
+
+        <h4>🎯 Diagnóstico</h4>
+        <ul class="checklist">
+          <li>Meu produto tem entre 5 e 7 módulos (para produto de entrada) ou está inchado?</li>
+          <li>Cada módulo entrega algo que o próximo módulo usa?</li>
+          <li>O aluno termina cada módulo sabendo exatamente o próximo passo?</li>
+          <li>Cada página/aula tem um único objetivo claro?</li>
+        </ul>
+
+        <h4>⚒️ Metodologia de Correção</h4>
+        <div class="step-list">
+          <div class="step-item"><strong>Mapeie a entrega de cada módulo</strong><p>Liste todos os módulos e escreva ao lado "o que o aluno tem em mãos ao final".</p></div>
+          <div class="step-item"><strong>Reordene por elos de corrente</strong><p>Cada entrega precisa alimentar diretamente a próxima.</p></div>
+          <div class="step-item"><strong>Corte ou funda módulos fracos</strong><p>Se não muda a ação prática do aluno, ele sai ou vira parte de outro módulo.</p></div>
+          <div class="step-item"><strong>Divida páginas longas</strong><p>Um objetivo único por bloco: conceito, prática ou checklist — nunca os três misturados.</p></div>
+        </div>
+
+        <h4>📸 Exemplo Prático</h4>
+        <div class="example-row">
+          <div class="example-card"><div class="ex-label">Antes</div><p>12 módulos, misturando teoria avançada e prática básica fora de ordem, aluno sem saber por onde seguir.</p></div>
+          <div class="example-card"><div class="ex-label">Depois</div><p>6 módulos em sequência de elos: Descoberta → Estrutura → Oferta → Tráfego → Execução → Métricas.</p></div>
+        </div>
+
+        <h4>📋 Checklist de Validação</h4>
+        <ul class="checklist">
+          <li>Reduzi ou reorganizei para 5-7 módulos</li>
+          <li>Cada módulo entrega uma peça usada no próximo</li>
+          <li>Cortei conteúdo que não muda a ação do aluno</li>
+          <li>Dividi páginas longas em blocos com objetivo único</li>
+        </ul>
+
+        <h4>🚀 Plano de Execução</h4>
+        <div class="plan-grid">
+          <div class="plan-cell"><div class="pc-label">Hoje</div><p>Mapear a estrutura atual e o que cada módulo entrega.</p></div>
+          <div class="plan-cell"><div class="pc-label">Amanhã</div><p>Reordenar em sequência de elos de corrente.</p></div>
+          <div class="plan-cell"><div class="pc-label">Revisar</div><p>Pedir para 1-2 pessoas percorrerem e apontar onde se perderam.</p></div>
+          <div class="plan-cell"><div class="pc-label">Melhorar</div><p>Ajustar com base no feedback antes do lançamento.</p></div>
+        </div>
+
+        <div class="pta-link"><div class="pl-label">🔗 Ligação com o Método PTA</div><p>Trabalhado no MOD.02 — Construção do Produto, Página 3 (estrutura, ordem lógica e organização em páginas/etapas).</p></div>
+      </div>
+
+      <!-- ERRO 06 -->
+      <div class="page-block" id="erro6">
+        <div class="page-tag">Erro Nº 06 · Pilar Produto · Liga com MOD.02</div>
+        <div class="badge-row"><div class="badge-num alert">06</div><div class="badge-label">🚨 O Erro</div></div>
+        <h3>Sem nome forte nem prova</h3>
+        <p class="lede">É um nome fraco/genérico somado à ausência total de prova social, autoridade ou resultado demonstrado.</p>
+        <p>Acontece porque quem está começando ainda não tem case e não sabe como comunicar autoridade sem exagerar. É típico do primeiro produto de quem parte do zero, sem histórico nenhum. O prejuízo: a oferta parece "mais uma no meio de mil", sem motivo de confiança, e a conversão sofre mesmo com uma boa oferta por trás.</p>
+
+        <div class="conseq-box"><div class="cb-label">❌ Consequência</div><p>Duas ofertas idênticas — uma com nome forte e prova, outra sem nada — a primeira converte muito mais, mesmo com exatamente o mesmo conteúdo.</p></div>
+
+        <h4>🎯 Diagnóstico</h4>
+        <ul class="checklist">
+          <li>Meu nome comunica a transformação, ou é só um termo vago?</li>
+          <li>Eu tenho pelo menos 1 tipo de prova (resultado próprio, depoimento, print, case)?</li>
+          <li>Se não tenho prova ainda, tenho um plano para gerar a primeira nos próximos 30 dias?</li>
+          <li>Minha oferta tem identidade própria, ou parece genérica?</li>
+        </ul>
+
+        <h4>⚒️ Metodologia de Correção</h4>
+        <div class="step-list">
+          <div class="step-item"><strong>Gere opções de nome</strong><p>Rode o prompt de oferta do MOD.02 pedindo 3 nomes que comuniquem a transformação de forma direta.</p></div>
+          <div class="step-item"><strong>Crie sua primeira prova</strong><p>Se ainda não tem, ofereça o produto de graça ou com desconto para 5-10 pessoas em troca de depoimento genuíno.</p></div>
+          <div class="step-item"><strong>Documente seu próprio processo</strong><p>Print de resultado, bastidores e evolução também contam como prova.</p></div>
+          <div class="step-item"><strong>Monte a seção de prova social</strong><p>Mesmo pequena no início, inclua na página de vendas.</p></div>
+        </div>
+
+        <h4>📸 Exemplo Prático</h4>
+        <div class="example-row">
+          <div class="example-card"><div class="ex-label">Antes</div><p>"Método Revolucionário de Vendas" — sem nenhuma prova, nome vago.</p></div>
+          <div class="example-card"><div class="ex-label">Depois</div><p>"Primeira Venda em 7 Dias", com 5 depoimentos de alunos beta que aplicaram e conseguiram o resultado.</p></div>
+        </div>
+
+        <h4>📋 Checklist de Validação</h4>
+        <ul class="checklist">
+          <li>Nome comunica a transformação com clareza</li>
+          <li>Tenho pelo menos uma prova real (própria ou de terceiros)</li>
+          <li>Tenho um plano para gerar mais provas nos próximos 30 dias</li>
+          <li>A oferta tem identidade própria, não genérica</li>
+        </ul>
+
+        <h4>🚀 Plano de Execução</h4>
+        <div class="plan-grid">
+          <div class="plan-cell"><div class="pc-label">Hoje</div><p>Rodar o prompt de nome e escolher a melhor opção.</p></div>
+          <div class="plan-cell"><div class="pc-label">Amanhã</div><p>Recrutar 5-10 pessoas para testar em troca de depoimento.</p></div>
+          <div class="plan-cell"><div class="pc-label">Revisar</div><p>A cada 30 dias, atualizar a página com novas provas.</p></div>
+          <div class="plan-cell"><div class="pc-label">Melhorar</div><p>Criar um processo contínuo de coleta de depoimentos pós-venda.</p></div>
+        </div>
+
+        <div class="pta-link"><div class="pl-label">🔗 Ligação com o Método PTA</div><p>Trabalhado no MOD.02 — Construção do Produto, Páginas 4 e 5 (nome, oferta e checklist final de aprovação do produto).</p></div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PILAR T — TRÁFEGO (ERROS 07-13)
+    ================================================================== -->
+    <section class="section" id="pilarT">
+      <div class="mod-header">
+        <div class="mod-eyebrow">Pilar T — Tráfego · Erros 07 a 13</div>
+        <h2>Erros que travam a chegada de pessoas até a oferta</h2>
+        <p class="mod-desc">Com o produto pronto, o dinheiro passa a vazar no tráfego. Estes 7 erros são os que mais queimam verba sem necessidade — ligados aos módulos 03, 04 e 05 do PTA.</p>
+      </div>
+
+      <!-- ERRO 07 -->
+      <div class="page-block" id="erro7">
+        <div class="page-tag">Erro Nº 07 · Pilar Tráfego · Liga com MOD.03</div>
+        <div class="badge-row"><div class="badge-num alert">07</div><div class="badge-label">🚨 O Erro</div></div>
+        <h3>Anunciar sem entender os fundamentos</h3>
+        <p class="lede">É sair impulsionando post ou criando campanha sem entender o que é tráfego, funil e como o dinheiro se movimenta dentro dele.</p>
+        <p>Acontece pela pressa de "ver resultado logo", pulando a base direto pro botão de anunciar. É comum em quem aprendeu a criar produto, mas nunca estudou como funciona uma campanha de verdade. O prejuízo: dinheiro queimado em impulsionamento sem estratégia, sem aprender nada do que deu certo ou errado.</p>
+
+        <div class="conseq-box"><div class="cb-label">❌ Consequência</div><p>Aperta "impulsionar" no post, gasta o orçamento em 2 dias e não sabe explicar por que não vendeu nada.</p></div>
+
+        <h4>🎯 Diagnóstico</h4>
+        <ul class="checklist">
+          <li>Eu sei explicar, numa frase, a diferença entre impressão, clique e conversão?</li>
+          <li>Eu sei qual objetivo de campanha é o certo para o meu funil?</li>
+          <li>Eu entendo o que é pixel/evento de conversão e se o meu está configurado?</li>
+          <li>Eu tenho um objetivo claro antes de criar o anúncio, ou só "quero vender"?</li>
+        </ul>
+
+        <h4>⚒️ Metodologia de Correção</h4>
+        <div class="step-list">
+          <div class="step-item"><strong>Escreva o plano antes de criar</strong><p>Objetivo, público, orçamento e métrica de sucesso — no papel, antes do Gerenciador de Anúncios.</p></div>
+          <div class="step-item"><strong>Valide o pixel</strong><p>Confirme que o evento de conversão está instalado e disparando, usando o teste de evento da plataforma.</p></div>
+          <div class="step-item"><strong>Escolha o objetivo certo</strong><p>De acordo com o estágio do seu funil: reconhecimento, consideração ou conversão.</p></div>
+          <div class="step-item"><strong>Rode como teste</strong><p>Orçamento pequeno e controlado, tratando a primeira campanha como aprendizado, não como "a campanha definitiva".</p></div>
+        </div>
+
+        <h4>📸 Exemplo Prático</h4>
+        <div class="example-row">
+          <div class="example-card"><div class="ex-label">Antes</div><p>Impulsionar post direto pelo Instagram, sem pixel, sem objetivo definido.</p></div>
+          <div class="example-card"><div class="ex-label">Depois</div><p>Campanha criada no Gerenciador de Anúncios, pixel validado, objetivo de conversão e orçamento de teste definido.</p></div>
+        </div>
+
+        <h4>📋 Checklist de Validação</h4>
+        <ul class="checklist">
+          <li>Sei explicar impressão, clique e conversão</li>
+          <li>Pixel/evento de conversão instalado e validado</li>
+          <li>Escolhi o objetivo de campanha correto</li>
+          <li>Defini orçamento e métrica de sucesso antes de publicar</li>
+        </ul>
+
+        <h4>🚀 Plano de Execução</h4>
+        <div class="plan-grid">
+          <div class="plan-cell"><div class="pc-label">Hoje</div><p>Validar se o pixel está disparando corretamente.</p></div>
+          <div class="plan-cell"><div class="pc-label">Amanhã</div><p>Criar a primeira campanha de teste com objetivo correto.</p></div>
+          <div class="plan-cell"><div class="pc-label">Revisar</div><p>Depois de 3 dias, checar as métricas antes de qualquer decisão.</p></div>
+          <div class="plan-cell"><div class="pc-label">Melhorar</div><p>Documentar aprendizados de cada teste para a próxima campanha.</p></div>
+        </div>
+
+        <div class="pta-link"><div class="pl-label">🔗 Ligação com o Método PTA</div><p>Direto no MOD.03 — Fundamentos do Tráfego, base para toda campanha que vem depois.</p></div>
+      </div>
+
+      <!-- ERRO 08 -->
+      <div class="page-block" id="erro8">
+        <div class="page-tag">Erro Nº 08 · Pilar Tráfego · Liga com MOD.04</div>
+        <div class="badge-row"><div class="badge-num alert">08</div><div class="badge-label">🚨 O Erro</div></div>
+        <h3>Público-alvo no achismo</h3>
+        <p class="lede">É definir o público do anúncio "no feeling", sem cruzar dados reais de quem tem a dor que o produto resolve.</p>
+        <p>Acontece porque as pessoas acham que "todo mundo" precisa do produto, ou copiam a segmentação de um concorrente sem entender o motivo por trás. É comum em quem pula direto pra configurar o anúncio sem antes desenhar a persona. O prejuízo: verba gasta impactando gente que nunca vai comprar, CPA alto, campanha parecendo "não funcionar" quando o problema real é o público.</p>
+
+        <div class="conseq-box"><div class="cb-label">❌ Consequência</div><p>A campanha roda, gera cliques baratos, mas ninguém compra — porque quem está vendo o anúncio não é quem sofre a dor do produto.</p></div>
+
+        <h4>🎯 Diagnóstico</h4>
+        <ul class="checklist">
+          <li>Eu sei descrever meu público em uma frase (idade, dor, momento de vida)?</li>
+          <li>Escolhi os interesses de segmentação com base em pesquisa, ou "no chute"?</li>
+          <li>Eu sei quais páginas/perfis meu público segue de verdade?</li>
+          <li>Já testei mais de um grupo de segmentação, ou só um?</li>
+        </ul>
+
+        <h4>⚒️ Metodologia de Correção</h4>
+        <div class="step-list">
+          <div class="step-item"><strong>Escreva a persona</strong><p>Volte à dor validada no MOD.01: quem sente essa dor, quando, e onde ela está online.</p></div>
+          <div class="step-item"><strong>Liste interesses reais</strong><p>5-8 páginas/interesses que essa persona segue de verdade — não interesses genéricos.</p></div>
+          <div class="step-item"><strong>Monte conjuntos paralelos</strong><p>2-3 segmentações diferentes para testar ao mesmo tempo.</p></div>
+          <div class="step-item"><strong>Compare o CPA</strong><p>Orçamento dividido igualmente entre os conjuntos, comparando resultado após alguns dias.</p></div>
+        </div>
+
+        <h4>📸 Exemplo Prático</h4>
+        <div class="example-row">
+          <div class="example-card"><div class="ex-label">Antes</div><p>Segmentação "Brasil, 18-65 anos, interesse em marketing" — 40 milhões de pessoas, genérico demais.</p></div>
+          <div class="example-card"><div class="ex-label">Depois</div><p>"24-38 anos, seguidores de páginas específicas de empreendedorismo iniciante" — 800 mil pessoas, muito mais qualificado.</p></div>
+        </div>
+
+        <h4>📋 Checklist de Validação</h4>
+        <ul class="checklist">
+          <li>Escrevi minha persona em uma frase clara</li>
+          <li>Levantei interesses reais, não genéricos</li>
+          <li>Criei pelo menos 2 conjuntos de segmentação para testar</li>
+          <li>Tenho um CPA de referência para comparar os resultados</li>
+        </ul>
+
+        <h4>🚀 Plano de Execução</h4>
+        <div class="plan-grid">
+          <div class="plan-cell"><div class="pc-label">Hoje</div><p>Escrever a persona com base na dor validada.</p></div>
+          <div class="plan-cell"><div class="pc-label">Amanhã</div><p>Montar 2-3 conjuntos de segmentação e subir os testes.</p></div>
+          <div class="plan-cell"><div class="pc-label">Revisar</div><p>Depois de 3-5 dias, comparar CPA entre os conjuntos.</p></div>
+          <div class="plan-cell"><div class="pc-label">Melhorar</div><p>Manter só o conjunto vencedor e testar variações dele.</p></div>
+        </div>
+
+        <div class="pta-link"><div class="pl-label">🔗 Ligação com o Método PTA</div><p>Trabalhado no MOD.04 — Público e Segmentação.</p></div>
+      </div>
+
+      <!-- ERRO 09 -->
+      <div class="page-block" id="erro9">
+        <div class="page-tag">Erro Nº 09 · Pilar Tráfego · Liga com MOD.04</div>
+        <div class="badge-row"><div class="badge-num alert">09</div><div class="badge-label">🚨 O Erro</div></div>
+        <h3>Público amplo demais</h3>
+        <p class="lede">É deixar a segmentação aberta demais — faixa etária muito ampla, sem interesses, sem localização refinada — achando que "quanto maior, melhor".</p>
+        <p>Acontece pelo medo de "limitar" o alcance e perder clientes em potencial. É comum em quem confunde alcance com qualidade de audiência. O prejuízo: verba diluída em gente que nunca teria interesse, custo por resultado sobe, e os dados de otimização da própria plataforma ficam poluídos.</p>
+
+        <div class="conseq-box"><div class="cb-label">❌ Consequência</div><p>A plataforma otimiza para "quem clica fácil", não para "quem compra" — e o algoritmo aprende errado desde o início.</p></div>
+
+        <h4>🎯 Diagnóstico</h4>
+        <ul class="checklist">
+          <li>Minha faixa etária está ampla demais (ex.: 18-65) sem necessidade?</li>
+          <li>Estou usando interesses genéricos em vez de específicos?</li>
+          <li>Já testei restringir e comparar o resultado?</li>
+          <li>Sei qual o tamanho ideal de p
